@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Gift
+from .serializers import GiftSerializer
 
-# Create your views here.
+
+class GiftList(APIView):
+    def get(self, request):
+        gifts = Gift.objects.all()
+        serializer = GiftSerializer(gifts, many=True)
+        return Response(serializer.data)
