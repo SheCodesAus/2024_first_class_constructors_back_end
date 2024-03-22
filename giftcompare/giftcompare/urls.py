@@ -21,5 +21,5 @@ import gifts.views as views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('gifts.urls')),
-
+    path('', include('categories.urls')),
 ]
