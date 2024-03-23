@@ -29,15 +29,13 @@ class GiftDetail(APIView):
             return Response(serializer.data)
         except Gift.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+    def put(self, request, pk):
+        gift = self.get_object(pk)
+        serializer = GiftSerializer(gift, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-# class CategoryGifts(APIView):
-#     def get(self, request, pk):
-#         try:
-#             category = Category.objects.get(pk=pk)
-#             gifts = category.gift_set.all()
-#             serializer = GiftSerializer(gifts, many=True)
-#             return Response(serializer.data)
-#         except Category.DoesNotExist:
-#             return Response(status=status.HTTP_404_NOT_FOUND)
 
         
