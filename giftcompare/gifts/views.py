@@ -10,6 +10,7 @@ class GiftList(APIView):
         gifts = Gift.objects.all()
         serializer = GiftSerializer(gifts, many=True)
         return Response(serializer.data)
+    
     def post(self, request):
         serializer=GiftSerializer(data=request.data)
         if serializer.is_valid():
@@ -20,6 +21,7 @@ class GiftList(APIView):
 class GiftDetail(APIView):
     def get_object(self, pk):
         return Gift.objects.get(pk=pk)
+    
     def get(self, request, pk):
         try:
             gift = self.get_object(pk)
