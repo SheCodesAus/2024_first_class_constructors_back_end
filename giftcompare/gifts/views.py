@@ -32,7 +32,7 @@ class GiftDetail(APIView):
         
     def put(self, request, pk):
         gift = self.get_object(pk)
-        serializer = GiftSerializer(gift, data=request.data)
+        serializer = GiftSerializer(instance = gift, data = request.data, partial = True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
