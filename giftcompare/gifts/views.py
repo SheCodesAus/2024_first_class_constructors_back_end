@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Gift
 from .serializers import GiftSerializer
-from rest_framework import status
+from rest_framework import status, permissions
 
 
 class GiftList(APIView):
@@ -19,6 +19,8 @@ class GiftList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class GiftDetail(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
     def get_object(self, pk):
         return Gift.objects.get(pk=pk)
 
