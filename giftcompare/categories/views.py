@@ -9,6 +9,7 @@ class CategoryList(APIView):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
+
     def post(self, request):
         serializer = CategorySerializer(data=request.data)
         if serializer.is_valid():
