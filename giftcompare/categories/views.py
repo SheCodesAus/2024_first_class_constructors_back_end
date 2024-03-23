@@ -2,11 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Category
 from .serializers import CategorySerializer
-from rest_framework import status, permissions
+from rest_framework import status
+from .permissions import IsAdminOrReadOnly
 
 class CategoryList(APIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    
+    permission_classes = [IsAdminOrReadOnly]
+
     def get(self, request):
         categories = Category.objects.all()
         serializer = CategorySerializer(categories, many=True)
