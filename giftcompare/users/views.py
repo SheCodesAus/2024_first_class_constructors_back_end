@@ -26,13 +26,19 @@ class UserRegistrationView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class CustomUserDetail(APIView):
-    permission_classes = [IsAdminOrReadOnly, IsAdminOrSelf]
+    permission_classes = [IsAdminOrSelf]
+
     def get_object(self, pk):
         try:
-            return CustomUser.objects.get(pk=pk)
+            user = CustomUser.objects.get(pk=pk)
         except CustomUser.DoesNotExist:
             raise Http404
-        
+
+        # Check object permissions
+        self.check_object_permissions(self.request, user)
+
+        return user
+
     def get(self, request, pk):
         user = self.get_object(pk)
         serializer = CustomUserSerializer(user)

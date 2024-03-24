@@ -23,16 +23,12 @@ class IsAdminOrNothing (permissions.BasePermission):
 
 class IsAdminOrSelf (permissions.BasePermission):
     """
-    Custom permission to only allow admin to get list of users,
-    registered users to view their own profile, and
-    allow new users to sign in.
+    Custom permission to only allow users to see their own profile, and admins to see any profile.
     """
     def has_object_permission(self, request, view, obj):
-        # If the request method is safe, only allow it if the user is an admin
-        if request.method in permissions.SAFE_METHODS:
-            return request.user.is_authenticated and request.user.is_staff
-        # Allow POST requests if the user is not authenticated
-        if not request.user.is_authenticated and request.method == 'POST':
-            return True
-        # If the request method is unsafe, only allow it if the user is the same as the object, or admin
+        # Check if the user is authenticated
+        if not request.user.is_authenticated:
+            return False
+
+        # Permissions are only allowed to the owner of the profile or admins.
         return obj == request.user or request.user.is_staff
