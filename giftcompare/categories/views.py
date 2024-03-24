@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from .models import Category
 from .serializers import CategorySerializer
 from rest_framework import status
-from .permissions import IsAdminOrReadOnly
+from giftcompare.permissions import IsAdminOrReadOnly
 
 class CategoryList(APIView):
     permission_classes = [IsAdminOrReadOnly]

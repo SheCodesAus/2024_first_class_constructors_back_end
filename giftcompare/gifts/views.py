@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from .models import Gift
 from .serializers import GiftSerializer
 from rest_framework import status, permissions
-from .permissions import IsAdminOrReadOnly
+from giftcompare.permissions import IsAdminOrReadOnly
 
 
 class GiftList(APIView):
