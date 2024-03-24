@@ -21,9 +21,9 @@ class IsAdminOrNothing (permissions.BasePermission):
         # Only allow the request if the user is an admin
         return request.user and request.user.is_authenticated and request.user.is_staff
 
-class IsAdminOrSelf (permissions.BasePermission):
+class IsAdminOrSelf(permissions.BasePermission):
     """
-    Custom permission to only allow users to see their own profile, and admins to see any profile.
+    Custom permission to only allow admin users, or profile ownwers to view.
     """
     def has_object_permission(self, request, view, obj):
         # Check if the user is authenticated

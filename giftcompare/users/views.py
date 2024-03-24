@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import CustomUser
 from .serializers import CustomUserSerializer
-from rest_framework.permissions import AllowAny
-from giftcompare.permissions import IsAdminOrReadOnly, IsAdminOrSelf, IsAdminOrNothing
+
+from giftcompare.permissions import IsAdminOrSelf, IsAdminOrNothing
 
 class CustomUserList(APIView):
     permission_classes = [IsAdminOrNothing]
@@ -36,10 +36,10 @@ class CustomUserDetail(APIView):
 
         # Check object permissions
         self.check_object_permissions(self.request, user)
-
         return user
 
     def get(self, request, pk):
         user = self.get_object(pk)
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
+    
