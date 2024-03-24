@@ -6,20 +6,19 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import CustomUser
 from .serializers import CustomUserSerializer
-from giftcompare.permissions import IsAdminOrReadOnly, IsAdminOrSelf
+from rest_framework.permissions import AllowAny
+from giftcompare.permissions import IsAdminOrReadOnly, IsAdminOrSelf, IsAdminOrNothing
 
 class CustomUserList(APIView):
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdminOrNothing]
 
     def get(self, request):
         users = CustomUser.objects.all()
         serializer = CustomUserSerializer(users, many=True)
         return Response(serializer.data)
-    
+
+class UserRegistrationView(APIView):
     def post(self, request):
-        if request.user.is_authenticated:
-            return Response(status=status.HTTP_403_FORBIDDEN 
-                            , data={"detail": "Not allowed to perform this action"})
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

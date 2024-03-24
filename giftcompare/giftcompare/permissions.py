@@ -13,6 +13,14 @@ class IsAdminOrReadOnly(permissions.BasePermission):
             # Only allow it if the user is an admin
             return request.user.is_staff
         
+class IsAdminOrNothing (permissions.BasePermission):
+    """
+    Custom permission to only allow admin users to get list of users.
+    """
+    def has_permission(self, request, view):
+        # Only allow the request if the user is an admin
+        return request.user and request.user.is_authenticated and request.user.is_staff
+
 class IsAdminOrSelf (permissions.BasePermission):
     """
     Custom permission to only allow admin to get list of users,
@@ -22,9 +30,9 @@ class IsAdminOrSelf (permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         # If the request method is safe, only allow it if the user is an admin
         if request.method in permissions.SAFE_METHODS:
-            return request.user.is_staff
+            return request.user.is_authenticated and request.user.is_staff
         # Allow POST requests if the user is not authenticated
         if not request.user.is_authenticated and request.method == 'POST':
             return True
-        # If the request method is unsafe, only allow it if the user is the same as the object
+        # If the request method is unsafe, only allow it if the user is the same as the object, or admin
         return obj == request.user or request.user.is_staff
