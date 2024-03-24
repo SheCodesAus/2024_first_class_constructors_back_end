@@ -1,4 +1,8 @@
 from rest_framework import permissions
+from rest_framework.permissions import BasePermission
+from rest_framework import permissions
+from rest_framework.permissions import BasePermission, IsAuthenticated
+
 
 class IsAdminOrReadOnly(permissions.BasePermission):
     """
@@ -12,18 +16,22 @@ class IsAdminOrReadOnly(permissions.BasePermission):
             # The method isn't a safe method
             # Only allow it if the user is an admin
             return request.user.is_staff
-        
-class IsAdminOrNothing (permissions.BasePermission):
-    """
-    Custom permission to only allow admin users to get list of users.
-    """
+
+class IsNotAuthenticated(BasePermission):
     def has_permission(self, request, view):
-        # Only allow the request if the user is an admin
-        return request.user and request.user.is_authenticated and request.user.is_staff
+        return not request.user.is_authenticated
+
+class IsAdminUser(BasePermission):
+    """
+    Allows access only to admin users.
+    """
+
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_staff)
 
 class IsAdminOrSelf(permissions.BasePermission):
     """
-    Custom permission to only allow admin users, or profile ownwers to view.
+    Custom permission to only allow admin users, or profile owners to view.
     """
     def has_object_permission(self, request, view, obj):
         # Check if the user is authenticated

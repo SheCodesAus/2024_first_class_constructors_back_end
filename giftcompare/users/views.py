@@ -6,11 +6,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import CustomUser
 from .serializers import CustomUserSerializer
-
-from giftcompare.permissions import IsAdminOrSelf, IsAdminOrNothing
+from giftcompare.permissions import IsAdminOrSelf, IsAdminUser, IsNotAuthenticated
 
 class CustomUserList(APIView):
-    permission_classes = [IsAdminOrNothing]
+    permission_classes = [IsAdminUser]
 
     def get(self, request):
         users = CustomUser.objects.all()
@@ -18,6 +17,8 @@ class CustomUserList(APIView):
         return Response(serializer.data)
 
 class UserRegistrationView(APIView):
+    permission_classes = [IsNotAuthenticated]
+
     def post(self, request):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
