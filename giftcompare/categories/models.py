@@ -6,4 +6,4 @@ class Category(models.Model):
     class Meta:
         db_table = "category"
 
-    name = models.TextField()
+    name = models.TextField(unique=True)
