@@ -4,10 +4,12 @@ from .models import Gift
 from .serializers import GiftSerializer
 from rest_framework import status, permissions
 from giftcompare.permissions import IsAdminOrReadOnly
+from django.db import transaction
 
 
 class GiftList(APIView):
     permission_classes = [IsAdminOrReadOnly]
+
     def get(self, request):
         gifts = Gift.objects.all()
         serializer = GiftSerializer(gifts, many=True)
@@ -41,4 +43,21 @@ class GiftDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class FeaturedGiftList(APIView):
+    permission_classes = [IsAdminOrReadOnly]
+
+    def get(self, request):
+        gifts = Gift.objects.filter(is_featured = True)
+        serializer = GiftSerializer(gifts, many=True)
+        return Response(serializer.data)
+        
+    def put(self, request): 
+        with transaction.atomic():
+            gifts = Gift.objects.all()
+            for gift in gifts:
+                gift.is_featured = (gift.pk in request.data)
+                gift.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
     
