@@ -11,8 +11,5 @@ class GiftSerializer(serializers.ModelSerializer):
             'price',
             'img',
             'source_url',
-            'featured_time'            
+            'is_featured'            
         ]
-        extra_kwargs = {
-            'featured_time': {'allow_null': True},
-        }
