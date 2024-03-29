@@ -26,8 +26,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-c7=g4eq^#(y^mfs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get(
     'DJANGO_DEBUG',
-    'False'
-) !='False'
+    'True'
+) !='True'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

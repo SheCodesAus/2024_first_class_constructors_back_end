@@ -12,8 +12,12 @@ class GiftList(APIView):
 
     def get(self, request):
         gifts = Gift.objects.all()
-        serializer = GiftSerializer(gifts, many=True)
-        return Response(serializer.data)
+        try:
+            serializer = GiftSerializer(gifts, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            print(e) 
+
     
     def post(self, request):
         serializer=GiftSerializer(data=request.data)
