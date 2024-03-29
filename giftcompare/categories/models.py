@@ -7,3 +7,6 @@ class Category(models.Model):
         db_table = "category"
 
     name = models.TextField(unique=True)
+
+    def __str__(self):
+        return self.name
