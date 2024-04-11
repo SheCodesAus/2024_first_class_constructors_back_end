@@ -1,7 +1,14 @@
 # Group Project Back End: Gift Compare website
 By First Class Constructors Team - March 2024
 
+### Links:
+### Live backend: [Gift Compare_backend](https://giftcompare-backend.fly.dev)
+### Live website: [GiftCompare](https://giftcompare.netlify.app/)
+### Frontend Github Repo: [FrontendRepo](https://github.com/SheCodesAus/2024_first_class_constructors_front_end)
 
+
+
+## Get Started
 This repo contains the `.gitignore` and `requirements.txt` you'll need to get started on your back end. A django project hasn't been created yet, so one person from the group will need to:
 
 - clone the repo down
@@ -29,6 +36,8 @@ Whether you're a seasoned gift-giver or dread having to select one, Gift Compare
 ## Planning: 
 This project used:
 * Django Rest framework to build the backbone of the website/APIs. 
+* drawsql.app: DB design
+* SQLite3 as database
 * Insomnia to show the APIs/Endpoints functionalities
 * Fly.io to deploy the backend live version
 
