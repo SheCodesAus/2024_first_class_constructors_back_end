@@ -53,7 +53,7 @@ This project used:
 
 
 ## Features:
-- Users can signup but at this stage of the MVP having an account is not required by the Client;
+- Users can signup, login and see their details on the Profile page but, at this stage of the MVP do not interact with the rest of the website as requested by the Client;
 - Necessary APIs use Token Authentication for appropriate user authentication and authorization;
 - APIs returns the relevant status codes for both successful and unsuccessful requests to APIs;
 - The handling of graceful failed requests will be part of frontend development;
